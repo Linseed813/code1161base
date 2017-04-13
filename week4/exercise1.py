@@ -28,7 +28,8 @@ def success_is_relative():
     # this depends on excecution context. Take a look at your CWD and remember
     # that it changes.
     # print(path, CWD)
-    pass
+    file_message = open(CWD + "/week1/pySuccessMessage.json").read()
+    return(file_message.strip())
 
 
 def get_some_details():
@@ -50,9 +51,10 @@ def get_some_details():
     json_data = open(LOCAL + "/lazyduck.json").read()
 
     data = json.loads(json_data)
-    return {"lastName":       None,
-            "password":       None,
-            "postcodePlusID": None
+    return {"lastName":       data["results"][0]["name"]["last"],
+            "password":       data["results"][0]["login"]["password"],
+            "postcodePlusID": int(data["results"][0]["location"]["postcode"]) +
+            int(data["results"][0]["id"]["value"])
             }
 
 
@@ -88,7 +90,20 @@ def wordy_pyramid():
     ]
     TIP: to add an argument to a URL, use: ?argName=argVal e.g. ?len=
     """
-    pass
+    import requests
+    baseURL = "http://www.setgetgo.com/randomword/get.php?len="
+    pyramid_list = []
+    for i in range(3, 21, 2):
+        url = baseURL + str(i)
+        r = requests.get(url)
+        message = r.text
+        pyramid_list.append(message)
+    for i in range(20, 3, -2):
+        url = baseURL + str(i)
+        r = requests.get(url)
+        message = r.text
+        pyramid_list.append(message)
+    return pyramid_list
 
 
 def wunderground():
@@ -103,7 +118,7 @@ def wunderground():
          variable and then future access will be easier.
     """
     base = "http://api.wunderground.com/api/"
-    api_key = "YOUR KEY - REGISTER TO GET ONE"
+    api_key = "0d453e08b05809a7"
     country = "AU"
     city = "Sydney"
     template = "{base}/{key}/conditions/q/{country}/{city}.json"
@@ -112,10 +127,10 @@ def wunderground():
     the_json = json.loads(r.text)
     obs = the_json['current_observation']
 
-    return {"state":           None,
-            "latitude":        None,
-            "longitude":       None,
-            "local_tz_offset": None}
+    return {"state":           obs["display_location"]["state"],
+            "latitude":        obs["display_location"]["latitude"],
+            "longitude":       obs["display_location"]["longitude"],
+            "local_tz_offset": obs["local_tz_offset"]}
 
 
 def diarist():
@@ -131,11 +146,17 @@ def diarist():
     TIP: remember to commit 'lasers.pew' and push it to your repo, otherwise
          the test will have nothing to look at.
     """
-    pass
+    # read gcode file to obtain number of times M10 P1 is called
+    gcode = open(LOCAL + "/Trispokedovetiles(laser).gcode", "r").read()
+    M10_P1_count = str(gcode.count('M10 P1'))
+    # # write M10_P1_count into a new file called lasers.pew
+    new_file = open(LOCAL + "/lasers.pew", "w")
+    new_file.write(M10_P1_count)
+    new_file.close()
 
 
 if __name__ == "__main__":
-    print([len(w) for w in wordy_pyramid()])
-    print(get_some_details())
-    print(wunderground())
+    # print([len(w) for w in wordy_pyramid()])
+    # print(get_some_details())
+    # print(wunderground())
     print(diarist())
