@@ -11,11 +11,19 @@ import string
 
 
 def getLetter(index):
+    """Get a lowercase letter by giving its index in the alphabet.
+
+    ie. getLetter(0) gives "a"
+    """
     alphabet = string.ascii_lowercase + " "
     return alphabet[index]
 
 
 def week2exercise2():
+    """Get a secret word by indices.
+
+    Map getLetter to a list of indices and concatenate.
+    """
     indices = [12, 2, 26, 7, 0, 12, 12, 4, 17]
     wordArray = map(getLetter, indices)
     wordArray[0] = wordArray[0].upper()
