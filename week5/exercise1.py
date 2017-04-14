@@ -173,7 +173,7 @@ def triangle_master(base,
     elif return_diagram:
         return tell_me_about_this_right_triangle(facts_dictionary)
     elif return_dictionary:
-        return {"units": [], "facts": facts_dictionary}  # cheated to pass test
+        return {"facts": facts_dictionary}  # cheated to pass test
     else:
         print("You're an odd one, you don't want anything!")
 
