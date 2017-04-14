@@ -27,25 +27,20 @@ def binary_search(low, high, actual_number):
       (You should remove them from the file, not comment them out, the
       tests aren't that smart yet.)
     """
-    range_list = range(low, high)
-    start = 0
-    end = len(range_list)-1
-    try_count = 0
-    found = False
-    # loop to compare actual_number to guess, ie, middle value of range
-    while start <= end and not found:
-        try_count += 1
-        mid = int(math.floor((start + end)/2))
-        mid_value = range_list[mid]
-        print(mid_value)
-        if mid_value == actual_number:
-            found = True
-        elif mid_value > actual_number:
-            end = mid-1
+    GUARD = 10
+    tries = 0
+
+    while True and tries < GUARD:
+        guess = int(math.floor((high-low)*0.5) + low)
+        if guess < actual_number:
+            low = guess
+        elif guess > actual_number:
+            high = guess
+        elif guess == actual_number:
+            return {"guess": guess, "tries": tries}
         else:
-            start = mid+1
-    guess_log = {"guess": [mid_value], "tries": [try_count]}
-    return guess_log
+            print("there's something wrong here")
+        tries += 1
 
 
 if __name__ == "__main__":
