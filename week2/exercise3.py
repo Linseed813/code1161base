@@ -9,7 +9,6 @@ def is_odd(a_number):
 
     Look into modulo division using the '%' operator as one way of doing this.
     """
-
     return a_number % 2 != 0
 
 
@@ -24,7 +23,6 @@ def fix_it(moves=True, should_move=True):
     "Duct Tape"
     "No Problem"
     """
-
     if moves and not should_move:
         return "Duct Tape"
     elif not moves and should_move:
@@ -71,7 +69,6 @@ def loops_1c(number_of_items=5, symbol="#"):
     a string with exacly one symbol in it.
     E.g.: ['#', '#', '#', '#', '#']
     """
-
     custom_list = []
     for i in range(number_of_items):
         custom_list.append(symbol)
@@ -126,7 +123,6 @@ def loops_3():
     TIP: notice that this needs to to return strings of numbers,
          so call str(number) to cast.
     """
-
     number_square = []
     for i in range(10):
         number_row = []
@@ -241,8 +237,8 @@ def loops_7(rows=5):
     This is a hard problem. Use lots of experimentation and draw
     lots of diagrams!
     """
-
     pyramid = []
+
     for i in range(rows):
         number_row = []
         # append the blanks to front end of rows #
