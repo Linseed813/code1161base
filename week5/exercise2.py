@@ -122,13 +122,9 @@ def koch(t, order, size):
     if order == 0:          # The base case is just a straight line
         t.forward(size)
     else:
-        trace += koch(t, order-1, size/3)   # Go 1/3 of the way
-        t.left(60)
-        trace += koch(t, order-1, size/3)
-        t.right(120)
-        trace += koch(t, order-1, size/3)
-        t.left(60)
-        trace += koch(t, order-1, size/3)
+        for angle in (60, -120, 60, 0):
+            trace += koch(t, order-1, size/3)  # Go 1/3 of the way
+            t.left(angle)   # Rotate turtle
     return str(order) + trace
 
 
@@ -139,7 +135,7 @@ def draw_koch(drawing_method, steps_deep=4):
     https://docs.python.org/2/library/turtle.html
     """
     raphael = turtle.Turtle()
-    raphael.speed(10)
+    raphael.speed(1000)
     raphael.penup()
     raphael.goto(-300, 0)
     raphael.pendown()
@@ -161,15 +157,9 @@ def square_koch(t, order, size):
     if order == 0:          # The base case is just a straight line
         t.forward(size)
     else:
-        trace += square_koch(t, order-1, size/3)   # Go 1/3 of the way
-        t.left(90)
-        trace += square_koch(t, order-1, size/3)
-        t.right(90)
-        trace += square_koch(t, order-1, size/3)
-        t.right(90)
-        trace += square_koch(t, order-1, size/3)
-        t.left(90)
-        trace += square_koch(t, order-1, size/3)
+        for angle in (90, -90, -90, 90, 0):
+            trace += square_koch(t, order-1, size/3)   # Go 1/3 of the way
+            t.left(angle)
     return str(order) + trace
 
 
@@ -185,9 +175,9 @@ def draw_pointy(steps=4):
 
 if __name__ == '__main__':
     # print(draw_koch(drawing_method=square_koch, steps_deep=3))
-    # print(draw_koch(drawing_method=square_koch, steps_deep=3))
+    print(draw_koch(drawing_method=square_koch, steps_deep=3))
     # print(draw_koch(drawing_method=square_koch, steps_deep=4))
     # print(draw_koch(drawing_method=koch, steps_deep=3))
-    print("AB:", abba())
+    # print("AB:", abba())
     # print("ID:", str(italian_dinner()))
     pass
