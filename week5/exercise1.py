@@ -199,15 +199,16 @@ def get_a_word_of_length_n(length):
 
     try:
         int(length)
+    except Exception:
+        print("Length not a number")
+    else:
         if length >= 3:
             url = baseURL + str(length)
             r = requests.get(url)
             message = r.text
             return message
         else:
-            print("Invalid length")
-    except Exception:
-        print("Invalid length")
+            print("Length must be at least 3")
 
 
 def list_of_words_with_lengths(list_of_lengths):
