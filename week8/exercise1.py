@@ -9,7 +9,6 @@ You've got an hour.
 """
 from __future__ import division
 from __future__ import print_function
-import time
 
 
 def greet(name="Towering Timmy"):
@@ -141,6 +140,15 @@ def make_filler_text_dictionary():
     return text_dictionary
 
 
+def get_word(dictionary):
+    """Get random word of random length from dictionary."""
+    import random
+    number1 = random.randint(3, 7)
+    number2 = random.randint(0, 2)
+    word = dictionary[number1][number2]
+    return word
+
+
 def random_filler_text(number_of_words=200):
     """Make a paragraph of random filler text.
 
@@ -153,14 +161,7 @@ def random_filler_text(number_of_words=200):
     Bonus: extra mark if you get the paragraph to start with a
            capital letter and end with a full stop.
     """
-    import random
     text_dictionary = make_filler_text_dictionary()
-
-    def get_word(dictionary):
-        number1 = random.randint(3, 7)
-        number2 = random.randint(0, 2)
-        word = dictionary[number1][number2]
-        return word
     paragraph = get_word(text_dictionary)
     for i in range(1, number_of_words):
         paragraph = paragraph + ' ' + get_word(text_dictionary)
@@ -179,7 +180,23 @@ def fast_filler(number_of_words=200):
     into and out of the file. Be careful when you read it back in, it'll
     convert integer keys to strings.
     """
-    pass
+    import json
+    import os
+    LOCAL = os.path.dirname(os.path.realpath(__file__))
+    if os.path.isfile(LOCAL + "/dict_racey.words"):
+        filepath = LOCAL + "/dict_racey.words"
+    else:
+        import_dictionary = make_filler_text_dictionary()
+        with open(LOCAL + "/dict_racey.words", 'w+') as filepath:
+            json.dump(import_dictionary, filepath)
+            filepath.close()
+    dictionary_data = open(filepath).read()
+    data = json.loads(dictionary_data)
+    data = {int(k): v for k, v in data.items()}
+    paragraph = get_word(data)
+    for i in range(1, number_of_words):
+        paragraph = paragraph + ' ' + get_word(data)
+    return paragraph.capitalize() + '.'
 
 
 if __name__ == '__main__':
